@@ -1,0 +1,37 @@
+workflows:
+
+  - name: download-mnist
+    provider: python
+    requirements: src/mnist/requirements.txt
+    python_script: src/mnist/download.py
+    artifacts:
+      - data
+
+  - name: train-mnist
+    provider: python
+    requirements: src/mnist/requirements.txt
+    python_script: src/mnist/train.py
+    depends-on:
+      - download-mnist:v1
+    artifacts:
+      - model
+    resources:
+      gpu: ${{ gpu }}
+
+  - name: download-gluemrpc
+    provider: python
+    requirements: src/gluemrpc/requirements.txt
+    python_script: src/gluemrpc/download.py
+    artifacts:
+      - data
+
+  - name: finetune-gluemrpc
+    provider: python
+    requirements: src/gluemrpc/requirements.txt
+    python_script: src/gluemrpc/finetune.py
+    depends-on:
+      - download-gluemrpc:v0.0.2
+    artifacts:
+      - model
+    resources:
+      gpu: ${{ fgpu }}

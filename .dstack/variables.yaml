@@ -1,0 +1,19 @@
+variables:
+
+  train-mnist:
+    gpu: 0
+    batch-size: 64
+    test-batch-size: 1000
+    epochs: 1
+    lr: 1.0
+    gamma: 0.7
+    seed: 1
+    log-interval: 10
+
+  finetune-gluemrpc:
+    fgpu: 0
+    learning-rate: 2e-5
+    train-batch-size: 8
+    eval-batch-size: 32
+    num-epochs: 2
+    fseed: 1
